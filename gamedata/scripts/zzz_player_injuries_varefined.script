@@ -1,7 +1,0 @@
-function zzz_player_injuries.actor_on_footstep_sound_file(sound_play)
-    if not zzz_player_injuries_mcm.get_config("new_voice_sounds") then
-        return "actor\\pain_" .. math.random(8)
-    end
-
-    return string.format("bhs%s\\%spain_%s", AGDD_voiced_actor.get_lang(), AGDD_voiced_actor.muffle, math.random(13))
-end

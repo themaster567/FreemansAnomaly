@@ -16,13 +16,15 @@ function on_key_press(key)
 --			end
 --			addonMenu = addonCompanionsContextMenu(v)
 --			addonMenu:ShowDialog(false)
+		local lang = AGDD_voiced_actor.get_actor_lang() -- Changed by Voiced Actor Refined
+		local muffle = AGDD_voiced_actor.get_muffle_status() -- Changed by Voiced Actor Refined		
 		chance = math.random(0,100)
 		if chance > 50 then
 			axr_companions.sound_checking_stop()
-			AGDD_voiced_actor.actor_speak(AGDD_voiced_actor.player_with_lang_muffle_random("command_start"),1.0,1000,100, true, false, false, false, false, false)
+			AGDD_voiced_actor.actor_speak("characters_voice\\player" .. lang .. "\\" .. muffle .. "command_start_" .. math.random(4),1.0,1000,100, true, false, false, false, false, false) -- Changed by Voiced Actor Refined
 --			show_all_ui(false)
 			if AGDD_voiced_actor.is_actor_in_combat() ~= true then
-				AGDD_voiced_actor.actor_speak(AGDD_voiced_actor.player_with_lang_muffle_random("command_stop"),1.0,1000,100, true, false, false, false, false, false)
+				AGDD_voiced_actor.actor_speak("characters_voice\\player" .. lang .. "\\" .. muffle .. "command_stop_" .. math.random(3),1.0,1000,100, true, false, false, false, false, false) -- Changed by Voiced Actor Refined
 			end
 --				addonMenu:CloseTheMenu()
 --			end

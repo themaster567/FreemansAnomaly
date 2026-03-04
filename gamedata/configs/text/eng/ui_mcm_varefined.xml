@@ -67,4 +67,7 @@
     <string id="ui_mcm_varefined_shouts_volume">
         <text>VA volume level</text>
     </string>
+    <string id="ui_mcm_varefined_debug_verbose">
+        <text>Debug Verbose</text>
+    </string>
 </string_table>

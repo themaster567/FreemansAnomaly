@@ -10,7 +10,8 @@ local defaults = {
     ["enable_muffled_shouts"] = true, -- Enables muffled shouts in helmets
     ["comments_shouts_key"] = DIK_keys.DIK_O, -- Keybind for comments shouts
     ["random_shouts_key"] = DIK_keys.DIK_P, -- Keybind for randomized shouts
-    ["shouts_volume"] = 2 -- Volume of the shouts
+    ["shouts_volume"] = 2, -- Volume of the shouts
+    ["debug_verbose"] = false -- Enables verbose logging for debugging purposes
 }
 
 op = {
@@ -106,6 +107,11 @@ op = {
         max = 2,
         step = 0.01,
         def = defaults["shouts_volume"]
+    }, {
+        id = "debug_verbose",
+        type = "check",
+        val = 1,
+        def = defaults["debug_verbose"]
     }}
 }
 
@@ -129,6 +135,7 @@ function on_option_change()
                 ui_mcm.set("wpo/profanity", false) -- Suppresing WPO jam shouts to use Voiced Actor Refined ones
             end
         end
+        AGDD_voiced_actor.debug_verbose = get_config("debug_verbose")
     end
 end
 

@@ -1,0 +1,46 @@
+if not grok_doom_weapons_inspect then
+    printf(
+            "[VARefined] zzz_varefined_monkey_grok_doom_weapons_inspect: grok_doom_weapons_inspect not found, aborting monkeypatch [Voiced Actor Refined mod]")
+    return
+end
+
+function sync_actor_lang_and_muffle()
+    grok_doom_weapons_inspect.lang = agdd_voiced_actor.get_actor_lang()
+    grok_doom_weapons_inspect.muffle = agdd_voiced_actor.get_muffle_status()
+end
+
+local old_grok_doom_weapons_inspect_check_anim = grok_doom_weapons_inspect.check_anim
+function grok_doom_weapons_inspect.check_anim()
+    if grok_doom_weapons_inspect.block_repeat then
+        return
+    end
+    if grok_doom_weapons_inspect.delay == nil then
+        old_grok_doom_weapons_inspect_check_anim()
+        return
+    end
+
+    local should_tick = time_global() > grok_doom_weapons_inspect.delay
+    old_grok_doom_weapons_inspect_check_anim()
+    if not should_tick then
+        return
+    end
+end
+
+function grok_doom_weapons_inspect.play_anim(weapon, anim, sound)
+    if grok_doom_weapons_inspect.block_repeat then
+        return
+    end
+
+    sync_actor_lang_and_muffle()
+    grok_doom_weapons_inspect.block_repeat = true
+    local length = weapon:play_hud_motion(anim, true, 0, 1, 0)
+    if sound then
+        snd = sound_object(sound)
+        snd:play_no_feedback(db.actor, sound_object.s2d, 0, vector(), 1.0, 1.0)
+        agdd_voiced_actor.actor_speak("grok\\" .. grok_doom_weapons_inspect.muffle .. "actor_" .. math.random(1, 11) .. grok_doom_weapons_inspect.lang, 1.0, 3000, 100, false, false, false, true, false, false) -- Voiced Actor Refined edit
+    end
+    CreateTimeEvent("grok_inspect", "restore", length / 1000, grok_doom_weapons_inspect.unset)
+end
+
+printf(
+        "[VARefined] grok_doom_weapons_inspect.script monkeypatched by zzz_varefined_monkey_grok_doom_weapons_inspect.script [Voiced Actor Refined mod]")

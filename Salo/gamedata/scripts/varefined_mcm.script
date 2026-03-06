@@ -1,0 +1,142 @@
+-- If you don't use MCM, change your defaults from here.
+local defaults = {
+    ["voice_language"] = 0,
+    ["enable_on_kill_shouts"] = true, -- Enables shouts after monster or NPC kills
+    ["enable_on_weapon_jam_shouts"] = true, -- Enables shouts after weapon jam, supresses WPO profanity if enabled
+    ["enable_on_weapon_reload_shouts"] = true, -- Enables shouts on weapon reload
+    ["enable_on_grenade_throw_shouts"] = true, -- Enables shouts on grenade throw action
+    ["enable_companions_commands_shouts"] = true, -- Enables shouts on companions commands
+    ["enable_pain_shouts"] = true, -- Enables pain shouts
+    ["enable_muffled_shouts"] = true, -- Enables muffled shouts in helmets
+    ["comments_shouts_key"] = DIK_keys.DIK_O, -- Keybind for comments shouts
+    ["random_shouts_key"] = DIK_keys.DIK_P, -- Keybind for randomized shouts
+    ["shouts_volume"] = 2 -- Volume of the shouts
+}
+
+op = {
+    id = "varefined",
+    sh = true,
+    gr = {{
+        id = "title",
+        type = "slide",
+        link = "ui_options_slider_player",
+        text = "ui_mcm_varefined_title",
+        size = {512, 50},
+        spacing = 20
+    }, {
+        id = "voice_language_description",
+        type = "desc",
+        text = "ui_mcm_varefined_voice_language_description"
+    }, {
+        id = "voice_language",
+        type = "radio_h",
+        val = 2,
+        content = {{0, "voice_language_by_faction"}, {1, "voice_language_russian"}, {2, "voice_language_english"}},
+        def = defaults["voice_language"]
+    }, {
+        id = "shouts_description",
+        type = "desc",
+        text = "ui_mcm_varefined_shouts_description"
+    }, {
+        id = "enable_on_kill_shouts",
+        type = "check",
+        val = 1,
+        def = defaults["enable_on_kill_shouts"]
+    }, {
+        id = "enable_on_weapon_jam_shouts",
+        type = "check",
+        val = 1,
+        def = defaults["enable_on_weapon_jam_shouts"]
+    }, {
+        id = "enable_on_weapon_reload_shouts",
+        type = "check",
+        val = 1,
+        def = defaults["enable_on_weapon_reload_shouts"]
+    }, {
+        id = "enable_on_grenade_throw_shouts",
+        type = "check",
+        val = 1,
+        def = defaults["enable_on_grenade_throw_shouts"]
+    }, {
+        id = "enable_companions_commands_shouts",
+        type = "check",
+        val = 1,
+        def = defaults["enable_companions_commands_shouts"]
+    }, {
+        id = "shouts_pain_muffled_description",
+        type = "desc",
+        text = "ui_mcm_varefined_shouts_pain_muffled_description"
+    }, {
+        id = "enable_pain_shouts",
+        type = "check",
+        val = 1,
+        def = defaults["enable_pain_shouts"]
+    }, {
+        id = "enable_muffled_shouts",
+        type = "check",
+        val = 1,
+        def = defaults["enable_muffled_shouts"]
+    }, {
+        id = "comments_shouts_key_description",
+        type = "desc",
+        text = "ui_mcm_varefined_comments_shouts_key_description"
+    }, {
+        id = "comments_shouts_key",
+        type = "key_bind",
+        val = 2,
+        def = defaults["comments_shouts_key"]
+    }, {
+        id = "random_shouts_key_description",
+        type = "desc",
+        text = "ui_mcm_varefined_random_shouts_key_description"
+    }, {
+        id = "random_shouts_key",
+        type = "key_bind",
+        val = 2,
+        def = defaults["random_shouts_key"]
+    }, {
+        id = "shouts_volume_description",
+        type = "desc",
+        text = "ui_mcm_varefined_shouts_volume_description"
+    }, {
+        id = "shouts_volume",
+        type = "track",
+        val = 2,
+        min = 0.5,
+        max = 2,
+        step = 0.01,
+        def = defaults["shouts_volume"]
+    }}
+}
+
+function get_config(key)
+    if ui_mcm then
+        return ui_mcm.get("varefined/" .. key)
+    else
+        return defaults[key]
+    end
+end
+
+function actor_on_first_update()
+    on_option_change()
+end
+
+function on_option_change()
+    if ui_mcm then
+        mcm_enable_on_weapon_jam_shouts = ui_mcm.get("varefined/enable_on_weapon_jam_shouts")
+        if mcm_enable_on_weapon_jam_shouts and a_arti_jamming_mcm then
+            if ui_mcm.get("wpo/profanity") then
+                ui_mcm.set("wpo/profanity", false) -- Suppresing WPO jam shouts to use Voiced Actor Refined ones
+            end
+        end
+    end
+end
+
+function on_game_start()
+    RegisterScriptCallback("actor_on_first_update", actor_on_first_update)
+    RegisterScriptCallback("on_option_change", on_option_change)
+end
+
+function on_mcm_load()
+    return op
+end

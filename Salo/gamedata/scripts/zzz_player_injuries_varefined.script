@@ -1,0 +1,95 @@
+function zzz_player_injuries.actor_on_footstep(material, power, hud_view, flags)
+
+    if not (NEW_LIMB_PENALTIES_FEATURE) then
+        return
+    end
+
+    local tg = time_global()
+    local right_l = health.leftleg * effects_mult -- right is left
+    local left_l = health.rightleg * effects_mult
+    if right_l < 1 then
+        right_l = 0.8
+    end -- exp will still make big difference between 1 and 0.8
+    if left_l < 1 then
+        left_l = 0.8
+    end
+    local legs_sum = (right_l + left_l) * effects_mult
+    local left_limp = math.exp(1.5 / left_l) --
+    local right_limp = math.exp(1.5 / right_l)
+    local both_limp = (right_limp + left_limp) / 2
+    local mst = IsMoveState('mcSprint') -- sprint is tearing animations apart, the only way is to increase delay for it
+
+    if tg > tg_anm then
+        if leftleg_flag then
+            if not mst then
+                level.add_cam_effector("camera_effects\\switch\\" .. leftleg_anm[math.random(#leftleg_anm)] .. ".anm",
+                        99251, false, "", 0, false, ((left_limp - 1) *
+                                (zzz_player_injuries_mcm.get_config("leg_animation_power"))))
+                tg_anm = tg + delay_anm_play
+            end
+            --	actor_menu.set_msg(1, strformat("Left leg HP: %s | Left leg Power: %s", left_l, left_limp))
+        elseif rightleg_flag then
+            if not mst then
+                level.add_cam_effector("camera_effects\\switch\\" .. rightleg_anm[math.random(#rightleg_anm)] .. ".anm",
+                        99261, false, "", 0, false, ((right_limp - 1) *
+                                (zzz_player_injuries_mcm.get_config("leg_animation_power"))))
+                tg_anm = tg + delay_anm_play
+            end
+            --	actor_menu.set_msg(1, strformat("Right leg HP: %s | Right leg Power: %s", right_l, right_limp))
+        elseif bothlegs_flag then
+            level.add_cam_effector("camera_effects\\switch\\" .. bothlegs_anm[math.random(#bothlegs_anm)] .. ".anm",
+                    99271, false, "", 0, false,
+                    ((both_limp - 1) * (zzz_player_injuries_mcm.get_config("leg_animation_power"))))
+            if not mst then
+                tg_anm = tg + delay_anm_play
+            else
+                tg_anm = tg + delay_anm_play * 1.6
+            end
+            --	actor_menu.set_msg(1, strformat("Both legs HP: %s | Both legs Power: %s", legs_sum, both_limp))
+        end
+    end
+
+    local l_leg_power = 0
+    local r_leg_power = 0
+    local hit_power = 0
+    local cr = IsMoveState('mcCrouch')
+    local low_cr = cr and IsMoveState('mcAccel')
+
+    if mst then
+        -- comment this and uncomment next one for super memes !!
+        --	if (not (cr or low_cr) ) and (left_l < 1 or right_l < 1) then
+        if left_l <= (zzz_player_injuries_mcm.get_config("leg_limping_damage_minimum_hp")) then
+            l_leg_power = 0.0290
+        end
+
+        if right_l <= (zzz_player_injuries_mcm.get_config("leg_limping_damage_minimum_hp")) then
+            r_leg_power = 0.0290
+        end
+
+        hit_power = (l_leg_power + r_leg_power) / 2
+
+        --	printf("hit_power: " .. (hit_power))
+        local file
+        local chance = math.random(1, 100) -- Voiced Actor Refined edits start
+        if (hit_power > 0) and (state_cooldown < time_global()) and (chance <= 13) then
+            if zzz_player_injuries_mcm.get_config("new_voice_sounds") then
+                local lang = agdd_voiced_actor.get_actor_lang()
+                local muffle = agdd_voiced_actor.get_muffle_status()
+                file = "bhs" .. lang .. "\\" .. muffle .. "pain_" .. math.random(13)
+            else
+                file = "actor\\pain_" .. math.random(8) -- Voiced Actor Refined edits end
+            end
+
+            agdd_voiced_actor.actor_speak(file, 1.0, cooldown, 100, false, false, false, true, true, false)
+
+            level.add_pp_effector("blur_bhs.ppe", math.random(655808, 655820), false)
+
+            state_cooldown = time_global() + cooldown
+
+            actor_health = db.actor.health
+            actor_health_reduced = actor_health - hit_power
+            db.actor:set_health_ex(actor_health_reduced)
+        end
+    end
+
+end

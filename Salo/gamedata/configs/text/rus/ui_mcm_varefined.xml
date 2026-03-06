@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<string_table>
+    <string id="ui_mcm_menu_varefined">
+        <text>VA Refined</text>
+    </string>
+    <string id="ui_mcm_varefined_title">
+        <text>Voiced Actor Refined</text>
+    </string>
+    <string id="ui_mcm_varefined_voice_language_description">
+        <text>Выбор языка озвучки ГГ. От группировки - ISG и Наемники с английской озвучкой, остальные группировки с русской. Только Русская и только Английская - очевидно. Можно изменять в процессе игры.</text>
+    </string>
+    <string id="ui_mcm_varefined_voice_language">
+        <text>Язык озвучки ГГ</text>
+    </string>
+    <string id="ui_mcm_lst_voice_language_by_faction">
+        <text>От группировки</text>
+    </string>
+    <string id="ui_mcm_lst_voice_language_russian">
+        <text>Русская</text>
+    </string>
+    <string id="ui_mcm_lst_voice_language_english">
+        <text>Английская</text>
+    </string>
+    <string id="ui_mcm_varefined_shouts_description">
+        <text>Включение/выключение проигрывания различных выкриков ГГ при разных обстоятельствах. В озвучке присутствует мат, 18+. Можно изменять в процессе игры. ВНИМАНИЕ! Если была включена озвучка в меню "WPO-> Ругательства при заклинивании" - VA Refined отключит ее, чтобы не было дублированных и иначе озвученных фраз.</text>
+    </string>
+    <string id="ui_mcm_varefined_enable_on_kill_shouts">
+        <text>Озвучка при убийствах</text>
+    </string>
+    <string id="ui_mcm_varefined_enable_on_weapon_jam_shouts">
+        <text>Озвучка при клине оружия</text>
+    </string>
+    <string id="ui_mcm_varefined_enable_on_weapon_reload_shouts">
+        <text>Озвучка при перезарядке оружия</text>
+    </string>
+    <string id="ui_mcm_varefined_enable_on_grenade_throw_shouts">
+        <text>Озвучка при броске гранаты</text>
+    </string>
+    <string id="ui_mcm_varefined_enable_companions_commands_shouts">
+        <text>Озвучка команд напарникам</text>
+    </string>
+    <string id="ui_mcm_varefined_shouts_pain_muffled_description">
+        <text>Озвучка при повреждениях ГГ и при наличии надетой маски/шлема. Можно изменять в процессе игры.</text>
+    </string>
+    <string id="ui_mcm_varefined_enable_pain_shouts">
+        <text>Озвучка при уменьшении здоровья ГГ</text>
+    </string>
+    <string id="ui_mcm_varefined_enable_muffled_shouts">
+        <text>Приглушенные звуки при надетой маске/шлеме</text>
+    </string>
+    <string id="ui_mcm_varefined_comments_shouts_key_description">
+        <text>Голосовые комментарии ГГ по нажатию кнопки, учитывающие обстановку вокруг и состояние. В озвучке присутствует мат, 18+. Можно изменять в процессе игры.</text>
+    </string>
+    <string id="ui_mcm_varefined_comments_shouts_key">
+        <text>Комментарии</text>
+    </string>
+    <string id="ui_mcm_varefined_random_shouts_key_description">
+        <text>Случайные фразы ГГ, не учитывающие обстановку вокруг и состояние. В озвучке присутствует мат, 18+. Можно изменять в процессе игры.</text>
+    </string>
+    <string id="ui_mcm_varefined_random_shouts_key">
+        <text>Случайные фразы</text>
+    </string>
+    <string id="ui_mcm_varefined_shouts_volume_description">
+        <text>Регулировка громкости фраз ГГ. Изменяет громкость всех фраз, добавляемых этим модом</text>
+    </string>
+    <string id="ui_mcm_varefined_shouts_volume">
+        <text>Громкость фраз</text>
+    </string>
+</string_table>

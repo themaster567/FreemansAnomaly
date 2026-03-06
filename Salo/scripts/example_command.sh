@@ -1,0 +1,1 @@
+./armorfx.sh apply -i YourInputFile.ogg -o YourOutputFile.ogg --preset halo --wet 0.65 --comb-hz 250 --comb-decay 0.30 --print-cmd --dump-params

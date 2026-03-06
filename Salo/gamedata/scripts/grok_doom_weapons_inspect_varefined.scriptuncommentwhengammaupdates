@@ -1,0 +1,12 @@
+if not grok_doom_weapons_inspect then
+    printf(
+            "[VARefined] zzz_varefined_monkey_grok_doom_weapons_inspect: grok_doom_weapons_inspect not found, aborting monkeypatch [Voiced Actor Refined mod]")
+    return
+end
+
+function grok_doom_weapons_inspect.play_anim_sound_file()
+    return string.format("grok\\%sactor_%d%s", agdd_voiced_actor.get_muffle_status(), math.random(1, 11), agdd_voiced_actor.get_actor_lang()) -- Voiced Actor Refined edit
+end
+
+printf(
+        "[VARefined] grok_doom_weapons_inspect.script monkeypatched by zzz_varefined_monkey_grok_doom_weapons_inspect.script [Voiced Actor Refined mod]")
